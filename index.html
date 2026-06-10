@@ -5,471 +5,450 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project Tracker</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #f5f6fa;
-    --surface: #ffffff;
-    --border: #e2e4ea;
-    --border-strong: #c8cad4;
-    --text: #1a1c23;
-    --text-muted: #6b7080;
-    --accent: #3b6d11;
-    --accent-light: #eaf3de;
-    --accent-dark: #27500a;
-    --danger: #a32d2d;
-    --danger-light: #fcebeb;
-    --warn: #ba7517;
-    --warn-light: #faeeda;
-    --info: #185fa5;
-    --info-light: #e6f1fb;
-    --radius: 8px;
-    --radius-lg: 12px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-lg: 0 4px 16px rgba(0,0,0,0.10);
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f7;
+  --surface:#ffffff;
+  --surface2:#f8f9fc;
+  --border:#e3e6ef;
+  --border2:#c9cdd9;
+  --text:#1b1e2b;
+  --text-muted:#6b7280;
+  --text-light:#9ca3af;
+  --accent:#2563eb;
+  --accent-light:#eff4ff;
+  --accent-dark:#1d4ed8;
+  --green:#16a34a;--green-light:#f0fdf4;
+  --red:#dc2626;--red-light:#fef2f2;
+  --amber:#d97706;--amber-light:#fffbeb;
+  --purple:#7c3aed;--purple-light:#f5f3ff;
+  --sky:#0284c7;--sky-light:#f0f9ff;
+  --radius:8px;--radius-lg:12px;--radius-xl:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --shadow-lg:0 8px 24px rgba(0,0,0,.12);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
 
-  /* Header */
-  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 10; }
-  .header-left { display: flex; align-items: center; gap: 12px; }
-  .logo { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-  .logo svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  header h1 { font-size: 17px; font-weight: 600; color: var(--text); }
-  .header-right { display: flex; align-items: center; gap: 12px; }
-  .badge-count { background: var(--accent-light); color: var(--accent-dark); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
+.logo-area{display:flex;align-items:center;gap:10px}
+.logo-box{width:34px;height:34px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:9px;display:flex;align-items:center;justify-content:center}
+.logo-box svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app-title{font-size:16px;font-weight:700;letter-spacing:-.3px}
+.app-sub{font-size:12px;color:var(--text-muted);margin-left:4px;font-weight:400}
+.header-right{display:flex;align-items:center;gap:8px}
 
-  /* Main */
-  main { max-width: 1280px; margin: 0 auto; padding: 2rem; }
+/* STATS */
+.stats-bar{display:flex;gap:10px;padding:1.25rem 1.5rem .75rem;overflow-x:auto}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.75rem 1.1rem;min-width:110px;flex-shrink:0;box-shadow:var(--shadow)}
+.stat-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;font-weight:500}
+.stat-val{font-size:24px;font-weight:700}
+.c-blue{color:var(--accent)}.c-green{color:var(--green)}.c-amber{color:var(--amber)}.c-red{color:var(--red)}.c-purple{color:var(--purple)}
 
-  /* Stats */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
-  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; }
-  .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .stat-value { font-size: 26px; font-weight: 600; }
-  .stat-value.green { color: var(--accent); }
-  .stat-value.amber { color: var(--warn); }
-  .stat-value.red { color: var(--danger); }
-  .stat-value.blue { color: var(--info); }
+/* TOOLBAR */
+.toolbar{display:flex;gap:8px;padding:0 1.5rem .75rem;flex-wrap:wrap;align-items:center}
+.search-wrap{position:relative;flex:1;min-width:220px}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:15px;height:15px;fill:none;stroke:var(--text-muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.search-wrap input{width:100%;padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--surface);outline:none;transition:border .15s}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+select.flt{padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--surface);color:var(--text);outline:none;cursor:pointer}
+select.flt:focus{border-color:var(--accent)}
+.btn{padding:8px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
+.btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-dark)}
+.btn-ghost{background:var(--surface);color:var(--text-muted);border:1px solid var(--border)}.btn-ghost:hover{color:var(--text);background:var(--surface2)}
+.btn-danger{background:var(--red-light);color:var(--red);border:1px solid #fca5a5}.btn-danger:hover{background:#fee2e2}
 
-  /* Toolbar */
-  .toolbar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .search-wrap { flex: 1; min-width: 200px; position: relative; }
-  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; fill: none; stroke: var(--text-muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
-  .search-wrap input { width: 100%; padding: 8px 12px 8px 34px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--bg); color: var(--text); outline: none; transition: border 0.15s; }
-  .search-wrap input:focus { border-color: var(--accent); background: var(--surface); }
-  select.filter { padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--bg); color: var(--text); outline: none; cursor: pointer; }
-  select.filter:focus { border-color: var(--accent); }
-  .btn { padding: 8px 16px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: var(--accent-dark); }
-  .btn-danger { background: var(--danger-light); color: var(--danger); border: 1px solid #f09595; }
-  .btn-danger:hover { background: #f7c1c1; }
-  .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
-  .btn-ghost:hover { background: var(--bg); color: var(--text); }
+/* TABLE */
+.table-container{padding:0 1.5rem 1.5rem;overflow-x:auto}
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow);min-width:1400px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:var(--surface2);border-bottom:2px solid var(--border)}
+th{padding:10px 12px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);white-space:nowrap;cursor:pointer;user-select:none;position:relative}
+th:hover{color:var(--text)}
+th.sorted{color:var(--accent)}
+th .si{display:inline-block;margin-left:3px;opacity:.4;font-size:10px}
+th.sorted .si{opacity:1}
+td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle;max-width:180px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbff}
+.col-sn{width:50px;text-align:center;color:var(--text-muted);font-weight:500}
+.col-actions{width:70px;text-align:center}
+.project-name-cell{font-weight:600;color:var(--text)}
+.domain-cell{font-size:12px;color:var(--text-muted);background:var(--surface2);padding:2px 8px;border-radius:20px;border:1px solid var(--border);display:inline-block;white-space:nowrap}
+.date-cell{font-size:12px;white-space:nowrap;color:var(--text-muted)}
+.date-cell.planned{color:var(--sky)}
+.date-cell.actual{color:var(--green)}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resource-tags{display:flex;flex-wrap:wrap;gap:3px}
+.rtag{font-size:11px;background:var(--accent-light);color:var(--accent-dark,#1d4ed8);padding:2px 7px;border-radius:20px;white-space:nowrap;font-weight:500}
+.rtag.pa{background:var(--purple-light);color:var(--purple)}
+.issues-cell{font-size:12px;color:var(--red);font-weight:600}
+.issues-cell.none{color:var(--text-light)}
+.row-actions{display:flex;gap:5px;justify-content:center;opacity:0;transition:opacity .15s}
+tr:hover .row-actions{opacity:1}
+.ib{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text-muted);transition:all .15s}
+.ib:hover{background:var(--surface2);color:var(--text)}
+.ib.del:hover{background:var(--red-light);color:var(--red);border-color:#fca5a5}
+.ib svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-  /* Table */
-  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  thead { background: var(--bg); border-bottom: 1px solid var(--border); }
-  th { padding: 11px 14px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); white-space: nowrap; cursor: pointer; user-select: none; }
-  th:hover { color: var(--text); }
-  th .sort-icon { display: inline-block; margin-left: 4px; opacity: 0.4; }
-  th.sorted .sort-icon { opacity: 1; color: var(--accent); }
-  td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #fafbfc; }
-  .row-actions { display: flex; gap: 6px; opacity: 0; transition: opacity 0.15s; }
-  tr:hover .row-actions { opacity: 1; }
-  .icon-btn { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
-  .icon-btn:hover { background: var(--bg); color: var(--text); }
-  .icon-btn.del:hover { background: var(--danger-light); color: var(--danger); border-color: #f09595; }
-  .icon-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .sn { color: var(--text-muted); font-weight: 500; }
-  .project-name { font-weight: 500; }
-  .resource { display: inline-flex; align-items: center; gap: 6px; }
-  .avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-light); color: var(--accent-dark); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .status-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: inline-block; }
-  .status-active { background: var(--info-light); color: var(--info); }
-  .status-completed { background: var(--accent-light); color: var(--accent-dark); }
-  .status-overdue { background: var(--danger-light); color: var(--danger); }
-  .status-upcoming { background: var(--warn-light); color: var(--warn); }
-  .remarks-cell { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-muted); font-size: 13px; }
-  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
-  .empty-state p { font-size: 15px; margin-top: 8px; }
+/* STATUS BADGES */
+.sbadge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;display:inline-block;white-space:nowrap}
+.s-active{background:var(--sky-light);color:var(--sky)}
+.s-completed{background:var(--green-light);color:var(--green)}
+.s-overdue{background:var(--red-light);color:var(--red)}
+.s-upcoming{background:var(--amber-light);color:var(--amber)}
+.s-hold{background:#f5f3ff;color:#7c3aed}
+.s-cancelled{background:#f9fafb;color:#6b7280}
 
-  /* Modal */
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-  .overlay.hidden { display: none; }
-  .modal { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 520px; box-shadow: var(--shadow-lg); overflow: hidden; }
-  .modal-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .modal-header h2 { font-size: 16px; font-weight: 600; }
-  .modal-body { padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  .field.full { grid-column: 1 / -1; }
-  label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
-  input[type=text], input[type=date], textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; color: var(--text); background: var(--surface); outline: none; font-family: inherit; transition: border 0.15s; }
-  input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,109,17,0.1); }
-  textarea { resize: vertical; min-height: 72px; }
-  .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
-  .error-msg { font-size: 12px; color: var(--danger); margin-top: 2px; display: none; }
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(15,20,40,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(2px)}
+.overlay.hidden{display:none}
+.modal{background:var(--surface);border-radius:var(--radius-xl);width:100%;max-width:700px;max-height:92vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);overflow:hidden}
+.modal-header{padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-header h2{font-size:16px;font-weight:700}
+.modal-body{padding:1.25rem 1.5rem;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+.field.third{grid-column:span 1}
+label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
+input[type=text],input[type=date],input[type=number],textarea,select.finput{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text);background:var(--surface);outline:none;font-family:inherit;transition:border .15s}
+input:focus,textarea:focus,select.finput:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+textarea{resize:vertical;min-height:64px}
+.err{font-size:11px;color:var(--red);display:none;margin-top:2px}
+.section-divider{grid-column:1/-1;display:flex;align-items:center;gap:8px;margin:.25rem 0}
+.section-divider span{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.modal-footer{padding:.9rem 1.5rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}
 
-  /* Confirm dialog */
-  .confirm-modal { max-width: 360px; }
-  .confirm-body { padding: 1.5rem; }
-  .confirm-body p { font-size: 14px; color: var(--text-muted); margin-top: 6px; }
+/* confirm */
+.cmodal{max-width:380px}
+.cbody{padding:1.25rem 1.5rem}
+.cbody p{font-size:13px;color:var(--text-muted);margin-top:5px}
 
-  /* Toast */
-  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: #fff; padding: 10px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; z-index: 200; transform: translateY(60px); opacity: 0; transition: all 0.25s; pointer-events: none; }
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .toast.success { background: var(--accent); }
-  .toast.error { background: var(--danger); }
+/* empty */
+.empty{text-align:center;padding:3rem 1rem;color:var(--text-muted)}
+.empty svg{width:44px;height:44px;fill:none;stroke:var(--border2);stroke-width:1.5;margin-bottom:8px}
 
-  @media (max-width: 700px) {
-    main { padding: 1rem; }
-    header { padding: 0 1rem; }
-    .modal-body { grid-template-columns: 1fr; }
-    .field.full { grid-column: 1; }
-    table { font-size: 13px; }
-    td, th { padding: 10px 10px; }
-  }
+/* toast */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--text);color:#fff;padding:10px 16px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:300;transform:translateY(60px);opacity:0;transition:all .25s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{background:var(--green)}
+.toast.er{background:var(--red)}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-left">
-    <div class="logo">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg>
+  <div class="logo-area">
+    <div class="logo-box">
+      <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
     </div>
-    <h1>Project Tracker</h1>
+    <div><span class="app-title">Project Tracker</span><span class="app-sub">— Team Dashboard</span></div>
   </div>
   <div class="header-right">
-    <span class="badge-count" id="totalBadge">0 projects</span>
+    <span id="totalBadge" style="font-size:12px;font-weight:600;background:var(--accent-light);color:var(--accent-dark,#1d4ed8);padding:3px 12px;border-radius:20px">0 projects</span>
     <button class="btn btn-primary" onclick="openAdd()">
-      <svg style="width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-      Add Project
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add Project
     </button>
   </div>
 </header>
 
-<main>
-  <div class="stats">
-    <div class="stat"><div class="stat-label">Total</div><div class="stat-value blue" id="s-total">0</div></div>
-    <div class="stat"><div class="stat-label">Active</div><div class="stat-value green" id="s-active">0</div></div>
-    <div class="stat"><div class="stat-label">Upcoming</div><div class="stat-value amber" id="s-upcoming">0</div></div>
-    <div class="stat"><div class="stat-label">Completed</div><div class="stat-value green" id="s-completed">0</div></div>
-    <div class="stat"><div class="stat-label">Overdue</div><div class="stat-value red" id="s-overdue">0</div></div>
-  </div>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-label">Total</div><div class="stat-val c-blue" id="s-total">0</div></div>
+  <div class="stat"><div class="stat-label">Active</div><div class="stat-val c-green" id="s-active">0</div></div>
+  <div class="stat"><div class="stat-label">Upcoming</div><div class="stat-val c-amber" id="s-upcoming">0</div></div>
+  <div class="stat"><div class="stat-label">Completed</div><div class="stat-val c-green" id="s-completed">0</div></div>
+  <div class="stat"><div class="stat-label">Overdue</div><div class="stat-val c-red" id="s-overdue">0</div></div>
+  <div class="stat"><div class="stat-label">On Hold</div><div class="stat-val c-purple" id="s-hold">0</div></div>
+</div>
 
-  <div class="toolbar">
-    <div class="search-wrap">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="searchInput" placeholder="Search projects, resources…" oninput="render()">
-    </div>
-    <select class="filter" id="statusFilter" onchange="render()">
-      <option value="">All Status</option>
-      <option value="Active">Active</option>
-      <option value="Upcoming">Upcoming</option>
-      <option value="Completed">Completed</option>
-      <option value="Overdue">Overdue</option>
-    </select>
-    <button class="btn btn-ghost" onclick="exportCSV()">
-      <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Export CSV
-    </button>
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Search project, domain, CR, resource…" oninput="render()">
   </div>
+  <select class="flt" id="domainFilter" onchange="render()">
+    <option value="">All Domains</option>
+    <option value="Banking">Banking</option>
+    <option value="Telecom">Telecom</option>
+  </select>
+  <select class="flt" id="statusFilter" onchange="render()">
+    <option value="">All Status</option>
+    <option>Active</option><option>Upcoming</option><option>Completed</option><option>Overdue</option><option>On Hold</option><option>Cancelled</option>
+  </select>
+  <select class="flt" id="monthFilter" onchange="render()"><option value="">All Months</option></select>
+  <button class="btn btn-ghost" onclick="exportCSV()">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV
+  </button>
+</div>
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th onclick="sortBy('sn')" id="th-sn">Sr.No <span class="sort-icon">↕</span></th>
-          <th onclick="sortBy('projectName')" id="th-projectName">Project Name <span class="sort-icon">↕</span></th>
-          <th onclick="sortBy('startDate')" id="th-startDate">Start Date <span class="sort-icon">↕</span></th>
-          <th onclick="sortBy('endDate')" id="th-endDate">End Date <span class="sort-icon">↕</span></th>
-          <th>Status</th>
-          <th onclick="sortBy('resourceName')" id="th-resourceName">Resource Name <span class="sort-icon">↕</span></th>
-          <th>Remarks</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-    </table>
-  </div>
-</main>
+<div class="table-container">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+  <th class="col-sn">Sr.No</th>
+  <th onclick="sortBy('domain')" id="th-domain">Domain <span class="si">↕</span></th>
+  <th onclick="sortBy('projectName')" id="th-projectName">Project Name <span class="si">↕</span></th>
+  <th onclick="sortBy('crName')" id="th-crName">CR Name <span class="si">↕</span></th>
+  <th onclick="sortBy('issueId')" id="th-issueId">Issue ID <span class="si">↕</span></th>
+  <th onclick="sortBy('productionIssues')" id="th-productionIssues">Production Issues <span class="si">↕</span></th>
+  <th onclick="sortBy('plannedMonth')" id="th-plannedMonth">Planned (Month/Year) <span class="si">↕</span></th>
+  <th>PA Release (Planned)</th>
+  <th>Client Release (Planned)</th>
+  <th>PA Closure (Planned)</th>
+  <th>PA Release (Actual)</th>
+  <th>PA Closure (Actual)</th>
+  <th>Client Release (Actual)</th>
+  <th onclick="sortBy('status')" id="th-status">Status <span class="si">↕</span></th>
+  <th>PA Resources</th>
+  <th>Dev Resources</th>
+  <th>Remarks</th>
+  <th class="col-actions"></th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+</div>
 
 <!-- Add/Edit Modal -->
-<div class="overlay hidden" id="formOverlay" onclick="overlayClick(event)">
-  <div class="modal" id="formModal">
-    <div class="modal-header">
-      <h2 id="modalTitle">Add Project</h2>
-      <button class="icon-btn" onclick="closeModal()">
-        <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="field full">
-        <label for="f-project">Project Name *</label>
-        <input type="text" id="f-project" placeholder="e.g. Website Redesign">
-        <span class="error-msg" id="err-project">Project name is required</span>
-      </div>
-      <div class="field">
-        <label for="f-start">Start Date *</label>
-        <input type="date" id="f-start">
-        <span class="error-msg" id="err-start">Required</span>
-      </div>
-      <div class="field">
-        <label for="f-end">End Date *</label>
-        <input type="date" id="f-end">
-        <span class="error-msg" id="err-end">Must be after start date</span>
-      </div>
-      <div class="field full">
-        <label for="f-resource">Resource Name *</label>
-        <input type="text" id="f-resource" placeholder="e.g. Arjun Sharma">
-        <span class="error-msg" id="err-resource">Resource name is required</span>
-      </div>
-      <div class="field full">
-        <label for="f-remarks">Remarks</label>
-        <textarea id="f-remarks" placeholder="Any notes or comments…"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
-    </div>
+<div class="overlay hidden" id="formOverlay" onclick="bgClick(event,'formOverlay')">
+<div class="modal" id="formModal">
+  <div class="modal-header">
+    <h2 id="modalTitle">Add Project</h2>
+    <button class="ib" onclick="closeModal()"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
+  <div class="modal-body">
+    <!-- Basic Info -->
+    <div class="section-divider full"><span>Basic Info</span></div>
+    <div class="field"><label>Domain *</label>
+      <select class="finput" id="f-domain">
+        <option value="">— Select Domain —</option>
+        <option value="Banking">Banking</option>
+        <option value="Telecom">Telecom</option>
+      </select>
+      <span class="err" id="e-domain">Required</span></div>
+    <div class="field"><label>Project Name *</label><input type="text" id="f-project" placeholder="e.g. Portal Redesign"><span class="err" id="e-project">Required</span></div>
+    <div class="field"><label>CR Name</label><input type="text" id="f-cr" placeholder="Change Request name"></div>
+    <div class="field"><label>Issue ID</label><input type="text" id="f-issueId" placeholder="e.g. JIRA-1023"></div>
+    <div class="field"><label>Production Issues</label><input type="number" id="f-issues" placeholder="0" min="0"></div>
+    <div class="field"><label>Planned Month/Year</label><input type="text" id="f-plannedMonth" placeholder="e.g. July 2025"></div>
+
+    <!-- Planned Dates -->
+    <div class="section-divider full"><span>Planned Dates</span></div>
+    <div class="field"><label>PA Release Date (Planned)</label><input type="date" id="f-paRelPlanned"></div>
+    <div class="field"><label>Client Release Date (Planned)</label><input type="date" id="f-clientRelPlanned"></div>
+    <div class="field full"><label>PA Closure Date (Planned)</label><input type="date" id="f-paClosePlanned"></div>
+
+    <!-- Actual Dates -->
+    <div class="section-divider full"><span>Actual Dates</span></div>
+    <div class="field"><label>PA Release Date (Actual)</label><input type="date" id="f-paRelActual"></div>
+    <div class="field"><label>PA Closure Date (Actual)</label><input type="date" id="f-paCloseActual"></div>
+    <div class="field full"><label>Client Release Date (Actual)</label><input type="date" id="f-clientRelActual"></div>
+
+    <!-- Resources & Status -->
+    <div class="section-divider full"><span>Resources & Status</span></div>
+    <div class="field full"><label>Status *</label>
+      <select class="finput" id="f-status">
+        <option value="Upcoming">Upcoming</option>
+        <option value="Active">Active</option>
+        <option value="Completed">Completed</option>
+        <option value="Overdue">Overdue</option>
+        <option value="On Hold">On Hold</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="field"><label>PA Resources</label><input type="text" id="f-paRes" placeholder="Names, comma-separated"></div>
+    <div class="field"><label>Dev Resources</label><input type="text" id="f-devRes" placeholder="Names, comma-separated"></div>
+    <div class="field full"><label>Remarks</label><textarea id="f-remarks" placeholder="Any notes or comments…"></textarea></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+  </div>
+</div>
 </div>
 
 <!-- Confirm Delete -->
-<div class="overlay hidden" id="confirmOverlay" onclick="confirmOverlayClick(event)">
-  <div class="modal confirm-modal">
-    <div class="modal-header">
-      <h2>Delete Project</h2>
-      <button class="icon-btn" onclick="closeConfirm()">
-        <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <div class="confirm-body">
-      <strong id="confirmName"></strong>
-      <p>This action cannot be undone. The project record will be permanently removed.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
-      <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
-    </div>
-  </div>
+<div class="overlay hidden" id="confirmOverlay" onclick="bgClick(event,'confirmOverlay')">
+<div class="modal cmodal">
+  <div class="modal-header"><h2>Delete Project</h2><button class="ib" onclick="closeConfirm()"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <div class="cbody"><strong id="cName"></strong><p>This cannot be undone. The project will be permanently removed.</p></div>
+  <div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button><button class="btn btn-danger" onclick="confirmDelete()">Delete</button></div>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-let projects = JSON.parse(localStorage.getItem('pt_projects') || '[]');
-let editId = null;
-let deleteId = null;
-let sortKey = 'sn';
-let sortAsc = true;
+let projects = JSON.parse(localStorage.getItem('pt2_projects')||'[]');
+let editId=null, deleteId=null, sortKey='id', sortAsc=true;
 
-function save() { localStorage.setItem('pt_projects', JSON.stringify(projects)); }
+function save(){localStorage.setItem('pt2_projects',JSON.stringify(projects));}
 
-function getStatus(start, end) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const s = new Date(start), e = new Date(end);
-  if (s > today) return 'Upcoming';
-  if (e < today) return 'Overdue';
-  if (e >= today && s <= today) return 'Active';
-  return 'Active';
-}
+function fmtDate(d){if(!d)return'—';const[y,m,day]=d.split('-');return`${day}/${m}/${y}`;}
 
-function fmtDate(d) {
-  if (!d) return '';
-  const [y,m,day] = d.split('-');
-  return `${day}/${m}/${y}`;
-}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function initials(name) {
-  return name.trim().split(/\s+/).slice(0,2).map(w=>w[0].toUpperCase()).join('');
-}
+function initials(name){return name.trim().split(/\s+/).slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');}
 
-function sortBy(key) {
-  if (sortKey === key) sortAsc = !sortAsc;
-  else { sortKey = key; sortAsc = true; }
-  render();
-}
+function statusClass(s){return({'Active':'s-active','Completed':'s-completed','Overdue':'s-overdue','Upcoming':'s-upcoming','On Hold':'s-hold','Cancelled':'s-cancelled'}[s]||'s-upcoming');}
 
-function getFiltered() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const sf = document.getElementById('statusFilter').value;
-  return projects.filter(p => {
-    const status = getStatus(p.startDate, p.endDate);
-    const match = !q || p.projectName.toLowerCase().includes(q) || p.resourceName.toLowerCase().includes(q) || (p.remarks||'').toLowerCase().includes(q);
-    const statusMatch = !sf || status === sf;
-    return match && statusMatch;
+function sortBy(k){if(sortKey===k)sortAsc=!sortAsc;else{sortKey=k;sortAsc=true;}render();}
+
+function getFiltered(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const sf=document.getElementById('statusFilter').value;
+  const df=document.getElementById('domainFilter').value;
+  const mf=document.getElementById('monthFilter').value;
+  return projects.filter(p=>{
+    const mq=!q||[p.projectName,p.domain,p.crName,p.paResources,p.devResources,p.remarks,p.issueId].some(v=>(v||'').toLowerCase().includes(q));
+    return mq&&(!sf||p.status===sf)&&(!df||p.domain===df)&&(!mf||p.plannedMonth===mf);
   });
 }
 
-function render() {
-  const filtered = getFiltered();
-  filtered.sort((a,b) => {
-    let va = sortKey === 'sn' ? a.id : (a[sortKey]||'').toLowerCase();
-    let vb = sortKey === 'sn' ? b.id : (b[sortKey]||'').toLowerCase();
-    return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+function updateFilters(){
+  const months=[...new Set(projects.map(p=>p.plannedMonth).filter(Boolean))].sort();
+  const mf=document.getElementById('monthFilter');
+  const mv=mf.value;
+  mf.innerHTML='<option value="">All Months</option>'+months.map(m=>`<option${mv===m?' selected':''}>${esc(m)}</option>`).join('');
+}
+
+function resourceTags(str, cls=''){
+  if(!str)return'<span style="color:var(--text-light);font-size:12px">—</span>';
+  return`<div class="resource-tags">${str.split(',').map(r=>r.trim()).filter(Boolean).map(r=>`<span class="rtag ${cls}">${esc(r)}</span>`).join('')}</div>`;
+}
+
+function render(){
+  updateFilters();
+  const filtered=getFiltered();
+  filtered.sort((a,b)=>{
+    let va=sortKey==='id'?a._ts:(a[sortKey]||'').toLowerCase();
+    let vb=sortKey==='id'?b._ts:(b[sortKey]||'').toLowerCase();
+    return sortAsc?(va>vb?1:-1):(va<vb?1:-1);
   });
 
-  document.querySelectorAll('th[id]').forEach(th => th.classList.remove('sorted'));
-  const sortedTh = document.getElementById('th-' + sortKey);
-  if (sortedTh) {
-    sortedTh.classList.add('sorted');
-    sortedTh.querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
-  }
+  document.querySelectorAll('th[id]').forEach(t=>{t.classList.remove('sorted');t.querySelector('.si').textContent='↕';});
+  const st=document.getElementById('th-'+sortKey);
+  if(st){st.classList.add('sorted');st.querySelector('.si').textContent=sortAsc?'↑':'↓';}
 
-  const body = document.getElementById('tableBody');
-  if (filtered.length === 0) {
-    body.innerHTML = `<tr><td colspan="8"><div class="empty-state"><svg style="width:40px;height:40px;fill:none;stroke:var(--border-strong);stroke-width:1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg><p>No projects found. Add one to get started.</p></div></td></tr>`;
-    updateStats([]);
-    return;
-  }
-
-  let sn = 1;
-  body.innerHTML = filtered.map(p => {
-    const status = getStatus(p.startDate, p.endDate);
-    const sBadge = `<span class="status-badge status-${status.toLowerCase()}">${status}</span>`;
-    const ini = initials(p.resourceName);
-    return `<tr>
-      <td class="sn">${sn++}</td>
-      <td class="project-name">${esc(p.projectName)}</td>
-      <td>${fmtDate(p.startDate)}</td>
-      <td>${fmtDate(p.endDate)}</td>
-      <td>${sBadge}</td>
-      <td><div class="resource"><div class="avatar">${ini}</div>${esc(p.resourceName)}</div></td>
-      <td><div class="remarks-cell" title="${esc(p.remarks||'')}">${esc(p.remarks||'—')}</div></td>
-      <td><div class="row-actions">
-        <button class="icon-btn" onclick="openEdit('${p.id}')" title="Edit">
-          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <button class="icon-btn del" onclick="openDelete('${p.id}')" title="Delete">
-          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-        </button>
+  const body=document.getElementById('tableBody');
+  if(!filtered.length){
+    body.innerHTML=`<tr><td colspan="18"><div class="empty"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg><p>No projects found. Add one to get started.</p></div></td></tr>`;
+  } else {
+    body.innerHTML=filtered.map((p,i)=>`<tr>
+      <td class="col-sn">${i+1}</td>
+      <td><span class="domain-cell">${esc(p.domain||'—')}</span></td>
+      <td class="project-name-cell truncate" title="${esc(p.projectName)}">${esc(p.projectName)}</td>
+      <td class="truncate" title="${esc(p.crName)}">${esc(p.crName||'—')}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${esc(p.issueId||'—')}</td>
+      <td class="issues-cell${!p.productionIssues||p.productionIssues==='0'?' none':''}">${p.productionIssues||'0'}</td>
+      <td style="font-size:12px;white-space:nowrap">${esc(p.plannedMonth||'—')}</td>
+      <td class="date-cell planned">${fmtDate(p.paRelPlanned)}</td>
+      <td class="date-cell planned">${fmtDate(p.clientRelPlanned)}</td>
+      <td class="date-cell planned">${fmtDate(p.paClosePlanned)}</td>
+      <td class="date-cell actual">${fmtDate(p.paRelActual)}</td>
+      <td class="date-cell actual">${fmtDate(p.paCloseActual)}</td>
+      <td class="date-cell actual">${fmtDate(p.clientRelActual)}</td>
+      <td><span class="sbadge ${statusClass(p.status)}">${esc(p.status)}</span></td>
+      <td>${resourceTags(p.paResources,'pa')}</td>
+      <td>${resourceTags(p.devResources,'')}</td>
+      <td class="truncate" title="${esc(p.remarks)}" style="color:var(--text-muted);font-size:12px">${esc(p.remarks||'—')}</td>
+      <td class="col-actions"><div class="row-actions">
+        <button class="ib" onclick="openEdit('${p.id}')" title="Edit"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+        <button class="ib del" onclick="openDelete('${p.id}')" title="Delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
       </div></td>
-    </tr>`;
-  }).join('');
+    </tr>`).join('');
+  }
 
-  updateStats(projects);
-  document.getElementById('totalBadge').textContent = projects.length + ' project' + (projects.length !== 1 ? 's' : '');
+  // stats
+  const all=projects;
+  document.getElementById('s-total').textContent=all.length;
+  ['Active','Upcoming','Completed','Overdue'].forEach(s=>document.getElementById('s-'+s.toLowerCase()).textContent=all.filter(p=>p.status===s).length);
+  document.getElementById('s-hold').textContent=all.filter(p=>p.status==='On Hold').length;
+  document.getElementById('totalBadge').textContent=all.length+' project'+(all.length!==1?'s':'');
 }
 
-function updateStats(all) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  document.getElementById('s-total').textContent = all.length;
-  document.getElementById('s-active').textContent = all.filter(p => getStatus(p.startDate, p.endDate) === 'Active').length;
-  document.getElementById('s-upcoming').textContent = all.filter(p => getStatus(p.startDate, p.endDate) === 'Upcoming').length;
-  document.getElementById('s-completed').textContent = all.filter(p => getStatus(p.startDate, p.endDate) === 'Completed').length;
-  document.getElementById('s-overdue').textContent = all.filter(p => getStatus(p.startDate, p.endDate) === 'Overdue').length;
-}
+const FIELDS=['domain','project','cr','issueId','issues','plannedMonth','paRelPlanned','clientRelPlanned','paClosePlanned','paRelActual','paCloseActual','clientRelActual','status','paRes','devRes','remarks'];
+const MAP={domain:'domain',project:'projectName',cr:'crName',issueId:'issueId',issues:'productionIssues',plannedMonth:'plannedMonth',paRelPlanned:'paRelPlanned',clientRelPlanned:'clientRelPlanned',paClosePlanned:'paClosePlanned',paRelActual:'paRelActual',paCloseActual:'paCloseActual',clientRelActual:'clientRelActual',status:'status',paRes:'paResources',devRes:'devResources',remarks:'remarks'};
 
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-function openAdd() {
-  editId = null;
-  document.getElementById('modalTitle').textContent = 'Add Project';
-  ['f-project','f-start','f-end','f-resource','f-remarks'].forEach(id => document.getElementById(id).value = '');
-  clearErrors();
+function openAdd(){
+  editId=null;
+  document.getElementById('modalTitle').textContent='Add Project';
+  FIELDS.forEach(f=>document.getElementById('f-'+f).value=f==='status'?'Upcoming':'');
+  clearErr();
   document.getElementById('formOverlay').classList.remove('hidden');
-  document.getElementById('f-project').focus();
+
 }
 
-function openEdit(id) {
-  const p = projects.find(x => x.id === id);
-  if (!p) return;
-  editId = id;
-  document.getElementById('modalTitle').textContent = 'Edit Project';
-  document.getElementById('f-project').value = p.projectName;
-  document.getElementById('f-start').value = p.startDate;
-  document.getElementById('f-end').value = p.endDate;
-  document.getElementById('f-resource').value = p.resourceName;
-  document.getElementById('f-remarks').value = p.remarks || '';
-  clearErrors();
+function openEdit(id){
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  editId=id;
+  document.getElementById('modalTitle').textContent='Edit Project';
+  FIELDS.forEach(f=>{const el=document.getElementById('f-'+f);if(el)el.value=p[MAP[f]]||'';});
+  clearErr();
   document.getElementById('formOverlay').classList.remove('hidden');
-  document.getElementById('f-project').focus();
 }
 
-function closeModal() { document.getElementById('formOverlay').classList.add('hidden'); }
-function overlayClick(e) { if (e.target.id === 'formOverlay') closeModal(); }
+function closeModal(){document.getElementById('formOverlay').classList.add('hidden');}
 
-function clearErrors() {
-  document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
-}
+function clearErr(){document.querySelectorAll('.err').forEach(e=>e.style.display='none');}
 
-function validate() {
-  let ok = true;
-  const proj = document.getElementById('f-project').value.trim();
-  const start = document.getElementById('f-start').value;
-  const end = document.getElementById('f-end').value;
-  const res = document.getElementById('f-resource').value.trim();
-  if (!proj) { document.getElementById('err-project').style.display = 'block'; ok = false; }
-  if (!start) { document.getElementById('err-start').style.display = 'block'; ok = false; }
-  if (!end || (start && end && end < start)) { document.getElementById('err-end').style.display = 'block'; ok = false; }
-  if (!res) { document.getElementById('err-resource').style.display = 'block'; ok = false; }
+function validate(){
+  let ok=true;
+  if(!document.getElementById('f-domain').value.trim()){document.getElementById('e-domain').style.display='block';ok=false;}
+  if(!document.getElementById('f-project').value.trim()){document.getElementById('e-project').style.display='block';ok=false;}
   return ok;
 }
 
-function saveProject() {
-  clearErrors();
-  if (!validate()) return;
-  const data = {
-    projectName: document.getElementById('f-project').value.trim(),
-    startDate: document.getElementById('f-start').value,
-    endDate: document.getElementById('f-end').value,
-    resourceName: document.getElementById('f-resource').value.trim(),
-    remarks: document.getElementById('f-remarks').value.trim()
-  };
-  if (editId) {
-    const idx = projects.findIndex(p => p.id === editId);
-    projects[idx] = { ...projects[idx], ...data };
-    showToast('Project updated', 'success');
+function saveProject(){
+  clearErr();if(!validate())return;
+  const d={};
+  FIELDS.forEach(f=>{const el=document.getElementById('f-'+f);if(el)d[MAP[f]]=el.value.trim();});
+  if(editId){
+    const idx=projects.findIndex(p=>p.id===editId);
+    projects[idx]={...projects[idx],...d};
+    showToast('Project updated','ok');
   } else {
-    data.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-    projects.push(data);
-    showToast('Project added', 'success');
+    d.id=Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+    d._ts=Date.now();
+    projects.push(d);
+    showToast('Project added','ok');
   }
-  save(); closeModal(); render();
+  save();closeModal();render();
 }
 
-function openDelete(id) {
-  deleteId = id;
-  const p = projects.find(x => x.id === id);
-  document.getElementById('confirmName').textContent = p.projectName;
+function openDelete(id){
+  deleteId=id;
+  const p=projects.find(x=>x.id===id);
+  document.getElementById('cName').textContent=p?.projectName||'this project';
   document.getElementById('confirmOverlay').classList.remove('hidden');
 }
-function closeConfirm() { document.getElementById('confirmOverlay').classList.add('hidden'); deleteId = null; }
-function confirmOverlayClick(e) { if (e.target.id === 'confirmOverlay') closeConfirm(); }
-function confirmDelete() {
-  projects = projects.filter(p => p.id !== deleteId);
-  save(); closeConfirm(); render();
-  showToast('Project deleted');
-}
+function closeConfirm(){document.getElementById('confirmOverlay').classList.add('hidden');deleteId=null;}
+function confirmDelete(){projects=projects.filter(p=>p.id!==deleteId);save();closeConfirm();render();showToast('Project deleted');}
 
-function showToast(msg, type='') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (type ? ' ' + type : '');
-  setTimeout(() => t.className = 'toast', 2500);
-}
+function bgClick(e,id){if(e.target.id===id){id==='formOverlay'?closeModal():closeConfirm();}}
 
-function exportCSV() {
-  if (!projects.length) { showToast('No data to export', 'error'); return; }
-  const headers = ['Sr.No','Project Name','Start Date','End Date','Status','Resource Name','Remarks'];
-  const rows = projects.map((p,i) => [
-    i+1, p.projectName, fmtDate(p.startDate), fmtDate(p.endDate), getStatus(p.startDate, p.endDate), p.resourceName, p.remarks||''
-  ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
-  const csv = [headers.join(','), ...rows].join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = 'projects_' + new Date().toISOString().slice(0,10) + '.csv';
+function exportCSV(){
+  if(!projects.length){showToast('No data to export','er');return;}
+  const h=['Sr.No','Domain','Project Name','CR Name','Issue ID','Production Issues','Planned Month/Year','PA Release (Planned)','Client Release (Planned)','PA Closure (Planned)','PA Release (Actual)','PA Closure (Actual)','Client Release (Actual)','Status','PA Resources','Dev Resources','Remarks'];
+  const rows=projects.map((p,i)=>[i+1,p.domain,p.projectName,p.crName,p.issueId,p.productionIssues,p.plannedMonth,fmtDate(p.paRelPlanned),fmtDate(p.clientRelPlanned),fmtDate(p.paClosePlanned),fmtDate(p.paRelActual),fmtDate(p.paCloseActual),fmtDate(p.clientRelActual),p.status,p.paResources,p.devResources,p.remarks].map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[h.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='projects_'+new Date().toISOString().slice(0,10)+'.csv';
   a.click();
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeConfirm(); } });
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.className='toast',2500);
+}
 
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeConfirm();}});
 render();
 </script>
 </body>
